@@ -1,0 +1,108 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Favourite Song</title>
+    <style>* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    background: black;
+}
+
+#bg-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    filter: brightness(0.3);
+}
+
+.overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #0ff;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+    text-align: center;
+}
+
+#glitch-header {
+    font-size: 3em;
+    position: relative;
+    animation: glitch-animation 2s infinite;
+}
+
+@@keyframes glitch-animation {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0, 0); }
+}
+
+.video-card {
+    margin-top: 30px;
+    border: 2px solid #0ff;
+    box-shadow: 0 0 20px #0ff;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+}
+</style>
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="" type="video/webm">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <div class="overlay">
+        <header id="glitch-header">NEON VIBES 🎶</header>
+
+        <div class="video-card">
+            <iframe width="1047" height="471" src="https://www.youtube.com/embed/fibYknUCIU4" title="NF - CLOUDS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        let header = document.getElementById("glitch-header");
+        let glowIntensity = 0;
+        let increasing = true;
+
+        function pulseGlow() {
+            if (increasing) {
+                glowIntensity += 1;
+                if (glowIntensity >= 100) increasing = false;
+            } else {
+                glowIntensity -= 1;
+                if (glowIntensity <= 0) increasing = true;
+            }
+
+            header.style.textShadow = `0 0 ${glowIntensity / 10}px #0ff, 0 0 ${glowIntensity / 5}px #0ff`;
+            requestAnimationFrame(pulseGlow);
+        }
+
+        pulseGlow();
+
+    </script>
+</body>
+</html>
